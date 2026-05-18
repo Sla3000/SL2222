@@ -68,7 +68,7 @@ app.put("/editar/:id", (req,res) => {
 
 // delete - deletar usuario
 
-app.delete("deletar/:id", (req, res) => {
+app.delete("/deletar/:id", (req, res) => {
     const id = number(req.params.id);
     const index = usuarios.findIndex( u => u.id === id )
     if(index === -1){
@@ -76,5 +76,23 @@ app.delete("deletar/:id", (req, res) => {
             mensagem: "usuario não encontrado"
         });
     }
+if(nome) usuario.nome = nome
+if(email) usuario.email = email;
 
-})
+res.json({
+    mensagem:"usuario atualizado com sucesso"
+  });
+
+  const usuarioRemovido = usuarios.splice(index, 1);
+
+  res.json({
+    mensagem: "usuario deletado com sucesso"
+    usuario: usuarioRemovido[0]
+  });
+});
+
+const PORT = 3000;
+
+app.listen(PORT,() =>
+   console.log('Servidor rodando em http//:localhost:${PORT}');//<-- crase
+))
